@@ -20,7 +20,7 @@ Each attendee should complete the Prerequisites section.
 1. Connect with the IBM Cloud CLI and OpenShift CLI
 2. Clone the repo
 3. Download and Load the Project
-4. Modify the Serverless project
+4. Review the Serverless project
 5. Build the Serverless project
 6. Push to the OpenShift Container Registry
 7. Create the OpenShift Serverless service
@@ -112,30 +112,13 @@ The lab proctors have previously completed the <a href="#setup"><b>Appendix: Set
     cd example-fhir-knative
     ```
 
-Once you have the project in the IDE, you are ready to 
+Once you have the project in the IDE, you are ready to review and build.
 
-### 4. Modify the Serverless Project
+### 4. Review the Serverless Project
 
-1. Grab the endpoint from the OpenShift Secret. The contents of this secret is in base64, and needs to be decoded.
+1. Review the `src/main/resources/endpoint.properties` a simple properties file. Notice the property points to the IBM FHIR Server - `fhirclient.rest.base.url`. If you are using this pattern in production, you can load all these values from a secret.
 
-    ```
-    oc get secret fhirhostname \
-        --namespace=default \
-        -o jsonpath='{.data.IBM_FHIR_SERVER_HOSTNAME}' \
-        | base64 -d
-    ```
-
-    You see the IBM FHIR Server endpoint.
-
-    ```
-    https://myserver.example.org/fhir-server/api/v4
-    ```
-
-2. Edit the `src/main/resources/endpoint.properties` a simple properties file. If you are using this pattern in production, you can load this file from a secret.
-
-3. Update `fhirclient.rest.base.url` so you have `fhirclient.rest.base.url=https://myserver.example.org/fhir-server/api/v4`
-
-4. Review the API, and you'll see how the API takes Query Parameters first and last name, and runs the Client.
+1. Review the API, and you'll see how the API takes Query Parameters first and last name, and runs the Client.
 
     - `src/main/java/com/ibm/fhir/example/knative/Loader.java` - The Loader API takes two simple HTTP Query Parameters, a first and last name, and submits a FHIR Bundle for the User identified by firstName and lastName.
         
@@ -174,7 +157,7 @@ Once you have the project in the IDE, you are ready to
         }
         ```
 
-5. Review the `/src/main/java/com/ibm/fhir/example/Client.java` and you'll find the dependency `fhir-client` is used to call the backend. The backend configuration is loaded from the endpoint.properties, and facilitates the creation and retrieval of FHIR data.
+1. Review the `/src/main/java/com/ibm/fhir/example/Client.java` and you'll find the dependency `fhir-client` is used to call the backend. The backend configuration is loaded from the endpoint.properties, and facilitates the creation and retrieval of FHIR data.
 
     The submitBundle creates a FHIRClient loads an endpoint configuration, and submits a generated bundle to the backend and generates a list of Resources extracted using the `fhir-path` module.
 
@@ -266,7 +249,7 @@ Once you have the project in the IDE, you are ready to
     }
     ```
 
-6. Review the `/src/main/java/com/ibm/fhir/example/BundleGenerator.java` and you'll see the `fhir-model` is used to build a set of resources in the HL7 FHIR Standard.
+1. Review the `/src/main/java/com/ibm/fhir/example/BundleGenerator.java` and you'll see the `fhir-model` is used to build a set of resources in the HL7 FHIR Standard.
 
     The sampleData method uses the IBM FHIR Server's `fhir-model` to create a [Bundle](https://www.hl7.org/fhir/Bundle.html) that reflects a conformant set of Resources for the patient.  This particular patient has a Medication prescribed for his observed (Observation) Blood Pressure and subsequently administered the medicine (MedicationAdministration).
    
@@ -453,6 +436,10 @@ Once you have the project in the IDE, you are ready to
     785573c4b945: Mounted from fhir-serverless/fhir-knative-jvm 
     latest: digest: sha256:27e52ab6a53cfc2d74350b230eb0c8693af0875c63c66f117f386cadb08fbf44 size: 1357
     ```
+
+    If you see `unauthorized: authentication required`, please be sure to `docker login` in the prior step.
+
+    If you see `Error from server (NotFound): routes.route.openshift.io "default-route" not found`, be sure to expose your [OpenShift Registry with an External Route](https://docs.openshift.com/container-platform/4.7/registry/securing-exposing-registry.html).
 
 1. Make the local registry lookup use relative names
 
