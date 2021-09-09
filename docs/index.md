@@ -32,7 +32,7 @@ Each attendee should complete the Prerequisites section.
 
 ## **Prerequisites**
 
-The lab proctors have previously completed the <a href="#setup"><b>Appendix: Setup</a>. If you are running outside of the Lab Environment, prior to completing the Project and Test sections, please complete the <a href="#setup"><b>Appendix: Setup</a>..
+The lab proctors have previously completed the <a href="#setup"><b>Appendix: Setup</b></a>. If you are running outside of the Lab Environment, prior to completing the Project and Test sections, please complete the <a href="#setup"><b>Appendix: Setu</b></a>.
 
 1. Install Docker [docker](https://docs.docker.com/engine/install/)
 
