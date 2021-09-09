@@ -19,7 +19,7 @@ Each attendee should complete the Prerequisites section.
 #### **Project**
 1. Connect with the IBM Cloud CLI and OpenShift CLI
 2. Clone the repo
-3. Download and Configure Project
+3. Download and Load the Project
 4. Modify the Serverless project
 5. Build the Serverless project
 6. Push to the OpenShift Container Registry
@@ -40,9 +40,9 @@ The lab proctors have previously completed the <a href="#setup"><b>Appendix: Set
 
 2. Log in, or create an account on [IBM Cloud](https://cloud.ibm.com)
 
-3. Install the `kubectl` and the `oc` following the directions at [https://cloud.ibm.com/docs/openshift?topic=openshift-openshift-cli](https://cloud.ibm.com/docs/openshift?topic=openshift-openshift-cli)
+3. Install the Red Hat OpenShift cli `oc`. [Link](https://cloud.ibm.com/docs/openshift?topic=openshift-openshift-cli)
 
-4. Install the `kn` CLI [Installing kn](https://knative.dev/docs/client/install-kn/)
+4. Install the Knative cli `kn`. [Link](https://knative.dev/docs/client/install-kn/)
 
 5. *Optional*: Install Maven [mvn](https://maven.apache.org/download.cgi) and Java.  You should use Java 11 for this lab. You can download from the [AdoptOpenJDK website](https://adoptopenjdk.net/installation.html#)
 
@@ -102,9 +102,9 @@ The lab proctors have previously completed the <a href="#setup"><b>Appendix: Set
     cd healthcare-serverless
     ~~~
 
-### 3. Download and Configure Project
+### 3. Download and Load the Project
 
-1. Open with your preferred Integrated Development Environment, such as [Visual Code](https://code.visualstudio.com/).
+1. Open with your preferred Integrated Development Environment (IDE), such as [Visual Code](https://code.visualstudio.com/).
 
 1. Change directory to the `example-fhir-knative` project
 
@@ -112,7 +112,7 @@ The lab proctors have previously completed the <a href="#setup"><b>Appendix: Set
     cd example-fhir-knative
     ```
 
-1. Review the Java Code
+Once you have the project in the IDE, you are ready to 
 
 ### 4. Modify the Serverless Project
 
@@ -517,10 +517,15 @@ To support the IBM FHIR Server's schema, a [IBM® Cloud Databases for PostgreSQL
 The script is as follows:
 
 ``` shell
-ibmcloud resource service-instance-create serverless-db databases-for-postgresql standard us-east -p '{"service-endpoints": "public-and-private"}'
-ibmcloud cdb deployment-configuration serverless-db '{"max_connections": 150}'
-ibmcloud cdb deployment-configuration serverless-db '{"max_prepared_transactions": 150}'
-ibmcloud cdb deployment-user-create serverless-db fhirserver
+ibmcloud resource service-instance-create serverless-db \
+    databases-for-postgresql standard us-east \
+    -p '{"service-endpoints": "public-and-private"}'
+ibmcloud cdb deployment-configuration \
+    serverless-db '{"max_connections": 150}'
+ibmcloud cdb deployment-configuration \
+    serverless-db '{"max_prepared_transactions": 150}'
+ibmcloud cdb deployment-user-create serverless-db \
+    fhirserver
 ```
 
 #### **Setup** IBM FHIR Server Operator
