@@ -116,21 +116,24 @@ Once you have the project in the IDE, you are ready to
 
 ### 4. Modify the Serverless Project
 
-1. Grab the endpoint from the OpenShift Secret
+1. Grab the endpoint from the OpenShift Secret. The contents of this secret is in base64, and needs to be decoded.
 
     ```
-    oc get secret fhirhostname --namespace=default -o jsonpath='{.data.IBM_FHIR_SERVER_HOSTNAME}' | base64 -d
+    oc get secret fhirhostname \
+        --namespace=default \
+        -o jsonpath='{.data.IBM_FHIR_SERVER_HOSTNAME}' \
+        | base64 -d
     ```
 
     You see the IBM FHIR Server endpoint.
 
     ```
-    myserver.example.org
+    https://myserver.example.org/fhir-server/api/v4
     ```
 
 2. Edit the `src/main/resources/endpoint.properties`
 
-3. Update `fhirclient.rest.base.url` so you have `fhirclient.rest.base.url=myserver.example.org`
+3. Update `fhirclient.rest.base.url` so you have `fhirclient.rest.base.url=https://myserver.example.org/fhir-server/api/v4`
 
 4. Review the API, and you'll see how the API takes Query Parameters first and last name, and runs the Client.
 
