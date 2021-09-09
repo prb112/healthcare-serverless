@@ -32,74 +32,17 @@ Each attendee should complete the Prerequisites section.
 
 ## **Prerequisites**
 
-The lab proctors have previously completed the <a href="#setup"><b>Appendix: Setup</b></a>. If you are running outside of the Lab Environment, prior to completing the Project and Test sections, please complete the <a href="#setup"><b>Appendix: Setu</b></a>.
+The lab proctors have previously completed the <a href="#setup"><b>Appendix: Setup</b></a>. If you are running outside of the Lab Environment, prior to completing the Project and Test sections, please complete the <a href="#setup"><b>Appendix: Setup</b></a>.
 
 1. Install Docker [docker](https://docs.docker.com/engine/install/)
 
 2. Log in, or create an account on [IBM Cloud](https://cloud.ibm.com)
 
-3. Install the [IBM Cloud CLI](https://cloud.ibm.com/docs/cli?topic=cli-getting-started)
+3. Install the `kubectl` and the `oc` following the directions at [https://cloud.ibm.com/docs/openshift?topic=openshift-openshift-cli](https://cloud.ibm.com/docs/openshift?topic=openshift-openshift-cli)
 
-4. Install the [IBM Cloud CLI Plugins](https://cloud.ibm.com/docs/openshift?topic=openshift-openshift-cli)
+4. Install the `kn` CLI [Installing kn](https://knative.dev/docs/client/install-kn/)
 
-#### *Plugin: Container Service*
-
-``` shell
-ibmcloud plugin install container-service -f
-```
-
-``` shell
-Looking up 'container-service' from repository 'IBM Cloud'...
-Plug-in 'container-service/kubernetes-service 1.0.312' found in repository 'IBM Cloud'
-Attempting to download the binary file...
-29.13 MiB / 29.13 MiB [========================================================] 100.00% 3s
-30539808 bytes downloaded
-Installing binary...
-OK
-Plug-in 'container-service 1.0.312' was successfully installed into /Users/example/.bluemix/plugins/container-service. Use 'ibmcloud plugin show container-service' to show its details.
-```
-
-#### *Plugin: Container Registry*
-
-``` shell
-ibmcloud plugin install container-registry -f
-```
-
-```
-Looking up 'container-registry' from repository 'IBM Cloud'...
-Plug-in 'container-registry 0.1.543' found in repository 'IBM Cloud'
-Attempting to download the binary file...
-26.28 MiB / 26.28 MiB [=====================================================] 100.00% 2s
-27560704 bytes downloaded
-Installing binary...
-OK
-Plug-in 'container-registry 0.1.543' was successfully installed into /Users/example/.bluemix/plugins/container-registry. Use 'ibmcloud plugin show container-registry' to show its details.
-```
-
-#### *Plugin: Observe Service*
-
-``` shell
-ibmcloud plugin install observe-service -f
-```
-
-```
-Looking up 'observe-service' from repository 'IBM Cloud'...
-Plug-in 'observe-service 1.0.61' found in repository 'IBM Cloud'
-Attempting to download the binary file...
-17.70 MiB / 17.70 MiB [==================================================] 100.00% 1s
-18561888 bytes downloaded
-Installing binary...
-OK
-Plug-in 'observe-service 1.0.61' was successfully installed into /Users/example/.bluemix/plugins/observe-service. Use 'ibmcloud plugin show observe-service' to show its details.
-```
-
-5. Install the `kubectl` and the `oc` following the directions at [https://cloud.ibm.com/docs/openshift?topic=openshift-openshift-cli](https://cloud.ibm.com/docs/openshift?topic=openshift-openshift-cli)
-
-6. *Optional*: Install the `kn` CLI [Installing kn](https://knative.dev/docs/client/install-kn/)
-
-7. *Optional*: Install Maven [mvn](https://maven.apache.org/download.cgi)
-
-There is also a strong requirement for Java 11 installed on your machine. You can download from the [AdoptOpenJDK website](https://adoptopenjdk.net/installation.html#)
+5. *Optional*: Install Maven [mvn](https://maven.apache.org/download.cgi) and Java.  You should use Java 11 for this lab. You can download from the [AdoptOpenJDK website](https://adoptopenjdk.net/installation.html#)
 
 # *Project*
 
@@ -117,9 +60,9 @@ There is also a strong requirement for Java 11 installed on your machine. You ca
 
 1. On a terminal window, paste the contents on the terminal.
 
-``` sh
+~~~ sh
 oc login --token=sha256~*** --server=https://***.us-east.containers.cloud.ibm.com:32689
-```
+~~~
 
 You will see: 
 
@@ -207,12 +150,12 @@ mvn clean install
 You should see `BUILD SUCCESS`. Note, if you do not, you 
 
 ```
-[INFO] ------------------------------------------------------------------------
+[INFO] -------------------------------------------------
 [INFO] BUILD SUCCESS
-[INFO] ------------------------------------------------------------------------
+[INFO] -------------------------------------------------
 [INFO] Total time:  9.077 s
 [INFO] Finished at: 2021-09-07T16:02:16-04:00
-[INFO] ------------------------------------------------------------------------
+[INFO] -------------------------------------------------
 ```
 
 1. If you do not have Maven installed
@@ -246,7 +189,8 @@ You should see `BUILD SUCCESS`. Note, if you do not, you
 1. Build the Docker image
 
     ```
-    docker build -qf src/main/docker/Dockerfile -t example/fhir-knative-jvm:latest .
+    docker build -qf src/main/docker/Dockerfile \
+        -t example/fhir-knative-jvm:latest .
     ```
 
     You'll see the image built, and named.
@@ -259,93 +203,98 @@ You should see `BUILD SUCCESS`. Note, if you do not, you
 
 1. Change to your project, such as `my-fhir-project`. If you need to create a project, you can first run `oc new-project my-fhir-project` to create a project.
 
-```
+    ```
     oc project my-fhir-project
-```
+    ```
 
     You have changed your name space
 
-```
+    ```
     Now using project "my-fhir-project" on server "https://host.us-east.containers.cloud.ibm.com:9999".
-```
+    ```
 
 1. Check the OpenShift Image registry host
 
-```
-    oc get route default-route -n openshift-image-registry --template='{{ .spec.host }}'
-```
+    ```
+    oc get route default-route -n openshift-image-registry \
+         --template='{{ .spec.host }}'
+    ```
     
     You see the hostname printed. 
 
-```
+    ```
     default-route-openshift-image-registry.healthcare-serverless-9999-0000.us-east.containers.appdomain.cloud
-```
+    ```
 
 1. Create an image stream
 
-```
+    ```
     oc create imagestream fhir-knative-jvm
-```
+    ```
 
     You see a new image stream is created.
 
-```
+    ```
     imagestream.image.openshift.io/fhir-knative-jvm created
-```
+    ```
 
 1. Tag the Image for the Image Registry
 
-```
-    docker tag example/fhir-knative-jvm:latest $(oc get route default-route -n openshift-image-registry --template='{{ .spec.host }}')/$(oc project --short=true)/fhir-knative-jvm:latest
-```
+    ```
+    docker tag example/fhir-knative-jvm:latest \
+        $(oc get route default-route -n openshift-image-registry --template='{{ .spec.host }}')/$(oc project --short=true)/fhir-knative-jvm:latest
+    ```
 
 1. Login to the Image Registry, and confirm you see `Login Succeeded`.
 
-```
-    docker login -u `oc whoami` -p `oc whoami --show-token` $(oc get route default-route -n openshift-image-registry --template='{{ .spec.host }}')
-```
+    ```
+    docker login -u `oc whoami` -p `oc whoami --show-token` \
+        $(oc get route default-route -n openshift-image-registry --template='{{ .spec.host }}')
+    ```
 
 1. Push the Image into the OpenShift Image Registry
 
-```
-    docker push $(oc get route default-route -n openshift-image-registry --template='{{ .spec.host }}')/$(oc project --short=true)/fhir-knative-jvm:latest
-```
+    ```
+    docker push \
+        $(oc get route default-route -n openshift-image-registry --template='{{ .spec.host }}')/$(oc project --short=true)/fhir-knative-jvm:latest
+    ```
 
     You see the image is on the server
 
-```
-    The push refers to repository [default-route-openshift-image-registry.healthcare-serverless-99999-0000.us-east.containers.appdomain.cloud/my-fhir-project/fhir-knative-jvm]
+    ```
+    The push refers to repository [default-route-openshift-image-registry.0000.us-east.containers.appdomain.cloud/my-fhir-project/fhir-knative-jvm]
     5f70bf18a086: Pushed 
     d23bc788009e: Pushed 
     8cf05ebe3167: Pushed 
     e7ed17121dee: Mounted from fhir-serverless/fhir-knative-jvm 
     785573c4b945: Mounted from fhir-serverless/fhir-knative-jvm 
     latest: digest: sha256:27e52ab6a53cfc2d74350b230eb0c8693af0875c63c66f117f386cadb08fbf44 size: 1357
-```
+    ```
 
 1. Make the local registry lookup use relative names
 
-```
+    ```
     oc set image-lookup  --all
-```
+    ```
 
     You see, and now you can use relative names to find your image.
 
-```
+    ```
     imagestream.image.openshift.io/fhir-knative-jvm image lookup updated
-```
+    ```
 
 ### 7. Create the OpenShift Serverless service
 
 1. Create the Knative service
 
-```
-    kn service create myfhir --force --image image-registry.openshift-image-registry.svc:5000/$(oc project --short=true)/fhir-knative-jvm
-```
+    ```
+    kn service create myfhir --force \
+        --image image-registry.openshift-image-registry.svc:5000/$(oc project --short=true)/fhir-knative-jvm
+    ```
 
     You see the revision of the Knative application is made available.
 
-```
+        ```
     Replacing service 'myfhir' in namespace 'my-fhir-project':
 
     0.213s Configuration "myfhir" does not have any ready Revision.
@@ -358,7 +307,7 @@ You should see `BUILD SUCCESS`. Note, if you do not, you
 
     Service 'myfhir' replaced to latest revision 'myfhir-00001' is available at URL:
     http://myfhir-my-fhir-project.healthcare-serverless-9999-0000.us-east.containers.appdomain.cloud
-```
+    ```
 
 # **Test**
 
@@ -366,41 +315,41 @@ You should see `BUILD SUCCESS`. Note, if you do not, you
 
 1. Check the url endpoint
 
-```
+    ```
     kn service describe myfhir -o url 
-```
+    ```
 
     You see: 
 
-``` 
-    http://fhir-loadero-fhir-serverless.healthcare-serverless-99999-0000.us-east.containers.appdomain.cloud
-```
+    ``` 
+    http://fhir-loadero-fhir-serverless.0000.us-east.containers.appdomain.cloud
+    ```
 
 1. Call the Serverless project with example first and last names.
 
-```
+    ```
     curl $(kn service describe myfhir -o url)'/v1/api/loader?last=John&first=Smith'
-```
+    ```
 
     You see the URLs generated for the new Patient data.
 
-```
+    ```
     [https://fhirserver-dev-fhir-serverless.healthcare-serverless-250babbbe4c3000e15508cd07c1d282b-0000.us-east.containers.appdomain.cloud/fhir-server/api/v4/Patient/dc7857d3-b5b8-4267-bdc5-14f86848ea7c/_history/1, https://fhirserver-dev-fhir-serverless.healthcare-serverless-250babbbe4c3000e15508cd07c1d282b-0000.us-east.containers.appdomain.cloud/fhir-server/api/v4/Observation/17bc7e604ee-556a98d0-08bf-4026-a3cd-b237cca895ca/_history/1, https://fhirserver-dev-fhir-serverless.healthcare-serverless-250babbbe4c3000e15508cd07c1d282b-0000.us-east.containers.appdomain.cloud/fhir-server/api/v4/Medication/b537a83b-0b06-4b07-8332-9801ca7022b2/_history/1, https://fhirserver-dev-fhir-serverless.healthcare-serverless-250babbbe4c3000e15508cd07c1d282b-0000.us-east.containers.appdomain.cloud/fhir-server/api/v4/MedicationAdministration/17bc7e6052c-a074acff-86db-4ef6-9aac-2195eb7e9118/_history/1]
-```
+    ```
 
 ### 9. Confirm Your data is loaded using FHIR Search
 
-1. Copy the URL from the output. e.g. `https://fhirserver-dev-fhir-serverless.healthcare-serverless-99999-0000.us-east.containers.appdomain.cloud/fhir-server/api/v4/Patient/dc7857d3-b5b8-4267-bdc5-14f86848ea7c/_history/1` and modify it slightly to extract the UUID so you are able to execute an `_id` search.
+1. Copy the URL from the output. e.g. `https://fhirserver-dev-fhir-serverless.0000.us-east.containers.appdomain.cloud/fhir-server/api/v4/Patient/dc7857d3-b5b8-4267-bdc5-14f86848ea7c/_history/1` and modify it slightly to extract the UUID so you are able to execute an `_id` search.
 
 1. Confirm the Patient is loaded using IBM FHIR Server's Search support. Be sure to include the URL in Double Quotes.
 
-```
+    ```
     curl -k -u fhiruser:change-password "https://fhirserver-dev-hir-serverless.healthcare-serverless-250babbbe4c3000e15508cd07c1d282b-0000.us-east.containers.appdomain.cloud/fhir-server/api/v4/Patient?_id=dc7857d3-b5b8-4267-bdc5-14f86848ea7c&_pretty=true"
-```
+    ```
 
     You see the FHIR R4 Patient Resource
 
-``` json
+    ``` json
     {
         "resourceType": "Bundle",
         "id": "30b39c61-3803-4ece-a502-a676975eb1d5",
@@ -450,7 +399,7 @@ You should see `BUILD SUCCESS`. Note, if you do not, you
             }
         ]
     }
-```
+    ```
 
 You have successfully loaded your IBM FHIR Server with Healthcare Data using a Serverless project.
 
@@ -458,17 +407,17 @@ You have successfully loaded your IBM FHIR Server with Healthcare Data using a S
 
 1. Call the Serverless project with example first and last names.
 
-```
+    ```
     curl $(kn service describe myfhir -o url)'/v1/api/report'
-```
+    ```
 
     You see the report generated by querying the backend FHIR Data.
 
-``` sh
+    ``` sh
     Total Number of Medication Administrations Today are: 2
     [0] Smith, John
     [1] Smith, John
-```
+    ```
 
 If there is more than one Patient created, you'll notice your report gets slightly more complicated as it reports on the total Patients that have Medications administered to them.
 
@@ -486,7 +435,76 @@ In this lab, you have built a simple healthcare serverless application using Red
 
 # **Appendix: Setup**
 
-<a link="setup"/>
+<div id="setup"/>
+
+#### **Setup** IBM Cloud CLI (Optional)
+
+1. Install the [IBM Cloud CLI](https://cloud.ibm.com/docs/cli?topic=cli-getting-started)
+
+2. Install the [IBM Cloud CLI Plugins](https://cloud.ibm.com/docs/openshift?topic=openshift-openshift-cli)
+
+#### *Plugin: Container Service*
+
+You should install Container Service for additional control of your containers.
+
+``` shell
+ibmcloud plugin install container-service -f
+```
+
+You see:
+
+``` shell
+Looking up 'container-service' from repository 'IBM Cloud'...
+Plug-in 'container-service/kubernetes-service 1.0.312' found in repository 'IBM Cloud'
+Attempting to download the binary file...
+29.13 MiB / 29.13 MiB [============] 100.00% 3s
+30539808 bytes downloaded
+Installing binary...
+OK
+Plug-in 'container-service 1.0.312' was successfully installed. Use 'ibmcloud plugin show container-service' to show its details.
+```
+
+#### *Plugin: Container Registry*
+
+You should install Container Registry to support a custom Registry
+
+``` shell
+ibmcloud plugin install container-registry -f
+```
+
+You see: 
+
+```
+Looking up 'container-registry' from repository 'IBM Cloud'...
+Plug-in 'container-registry 0.1.543' found in repository 'IBM Cloud'
+Attempting to download the binary file...
+26.28 MiB / 26.28 MiB [============] 100.00% 2s
+27560704 bytes downloaded
+Installing binary...
+OK
+Plug-in 'container-registry 0.1.543' was successfully installed. Use 'ibmcloud plugin show container-registry' to show its details.
+```
+
+#### *Plugin: Observe Service*
+
+You should install Observe Service for additional logging of your containers and cluster.
+
+``` shell
+ibmcloud plugin install observe-service -f
+```
+
+You see:
+
+```
+Looking up 'observe-service' from repository 'IBM Cloud'...
+Plug-in 'observe-service 1.0.61' found in repository 'IBM Cloud'
+Attempting to download the binary file...
+17.70 MiB / 17.70 MiB [============] 100.00% 1s
+18561888 bytes downloaded
+Installing binary...
+OK
+Plug-in 'observe-service 1.0.61' was successfully installed. Use 'ibmcloud plugin show observe-service' to show its details.
+```
 
 #### **Setup** PostgreSQL Instance
 
@@ -812,7 +830,7 @@ oc create secret generic fhir-serverless-secret \
 1. Run a Health Check 
 
 ```
-curl -k -u fhiruser:yourpassword 'https://fhirserver-dev-fhir-serverless.healthcare-serverless-99999-0000.us-east.containers.appdomain.cloud/fhir-server/api/v4/$healthcheck'
+curl -k -u fhiruser:yourpassword 'https://fhirserver-dev-fhir-serverless.0000.us-east.containers.appdomain.cloud/fhir-server/api/v4/$healthcheck'
 ```
 
 Your IBM FHIR Server instance is up and running on Red Hat OpenShift.
