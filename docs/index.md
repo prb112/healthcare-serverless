@@ -44,11 +44,11 @@ The lab proctors have previously completed the `Appendix: Setup`. If you are run
 
 ### *Plugin: Container Service*
 
-    ``` shell
-    ibmcloud plugin install container-service -f
-    ```
+``` shell
+ibmcloud plugin install container-service -f
+```
 
-    ``` shell
+``` shell
     Looking up 'container-service' from repository 'IBM Cloud'...
     Plug-in 'container-service/kubernetes-service 1.0.312' found in repository 'IBM Cloud'
     Attempting to download the binary file...
@@ -57,15 +57,15 @@ The lab proctors have previously completed the `Appendix: Setup`. If you are run
     Installing binary...
     OK
     Plug-in 'container-service 1.0.312' was successfully installed into /Users/example/.bluemix/plugins/container-service. Use 'ibmcloud plugin show container-service' to show its details.
-    ```
+```
 
 ### *Plugin: Container Registry*
 
-    ``` shell
+``` shell
     ibmcloud plugin install container-registry -f
-    ```
+```
 
-    ```
+```
     Looking up 'container-registry' from repository 'IBM Cloud'...
     Plug-in 'container-registry 0.1.543' found in repository 'IBM Cloud'
     Attempting to download the binary file...
@@ -74,15 +74,15 @@ The lab proctors have previously completed the `Appendix: Setup`. If you are run
     Installing binary...
     OK
     Plug-in 'container-registry 0.1.543' was successfully installed into /Users/example/.bluemix/plugins/container-registry. Use 'ibmcloud plugin show container-registry' to show its details.
-    ```
+```
 
 ### *Plugin: Observe Service*
 
-    ``` shell
+``` shell
     ibmcloud plugin install observe-service -f
-    ```
+```
 
-    ```
+```
     Looking up 'observe-service' from repository 'IBM Cloud'...
     Plug-in 'observe-service 1.0.61' found in repository 'IBM Cloud'
     Attempting to download the binary file...
@@ -91,7 +91,7 @@ The lab proctors have previously completed the `Appendix: Setup`. If you are run
     Installing binary...
     OK
     Plug-in 'observe-service 1.0.61' was successfully installed into /Users/example/.bluemix/plugins/observe-service. Use 'ibmcloud plugin show observe-service' to show its details.
-    ```
+```
 
 5. Install the `kubectl` and the `oc` following the directions at [https://cloud.ibm.com/docs/openshift?topic=openshift-openshift-cli](https://cloud.ibm.com/docs/openshift?topic=openshift-openshift-cli)
 
@@ -117,43 +117,43 @@ There is also a strong requirement for Java 11 installed on your machine. You ca
 
 1. On a terminal window, paste the contents on the terminal.
 
-    ```
+```
     oc login --token=sha256~*** --server=https://***.us-east.containers.cloud.ibm.com:32689
-    ```
+```
 
     You will see: 
 
-    ```
+```
     Logged into "https://****.us-east.containers.cloud.ibm.com:32689" as "IAM#***" using the token provided.
 
     You have access to 69 projects, the list has been suppressed. You can list all projects with 'oc projects'
 
     Using project "default".
-    ```
+```
 
 ### 2. Clone the repo
 
 1. Clone the repository 
 
-    ```
+```
     git clone https://github.com/prb112/healthcare-serverless.git
-    ```
+```
 
     You see the repository is cloned and unpacked.
 
-    ```
+```
     Cloning into 'healthcare-serverless'...
     remote: Enumerating objects: 10, done.
     remote: Counting objects: 100% (10/10), done.
     remote: Compressing objects: 100% (7/7), done.
     remote: Total 10 (delta 1), reused 6 (delta 1), pack-reused 0
     Unpacking objects: 100% (10/10), done.
-    ```
+```
 1. Change to the healthcare-serverless repository
 
-    ```
+```
     cd healthcare-serverless
-    ```
+```
 
 ### 3. Download and Configure Project with Visual Code
 
@@ -161,9 +161,9 @@ There is also a strong requirement for Java 11 installed on your machine. You ca
 
 1. Change directory to the `example-fhir-knative` project
 
-    ```
+```
     cd example-fhir-knative
-    ```
+```
 
 1. Review the Java Code
 
@@ -171,15 +171,15 @@ There is also a strong requirement for Java 11 installed on your machine. You ca
 
 1. Grab the endpoint from the OpenShift Secret
 
-    ```
+```
     oc get secret fhirhostname --namespace=default -o jsonpath='{.data.IBM_FHIR_SERVER_HOSTNAME}' | base64 -d
-    ```
+```
 
     You see the IBM FHIR Server endpoint.
 
-    ```
+```
     myserver.example.org
-    ```
+```
 
 1. Edit the `src/main/resources/endpoint.properties`
 
@@ -200,38 +200,38 @@ There is also a strong requirement for Java 11 installed on your machine. You ca
 
     1. If you have Maven installed: 
 
-    ```
+```
     mvn clean install
-    ```
+```
 
     You should see `BUILD SUCCESS`. Note, if you do not, you 
 
-    ```
+```
     [INFO] ------------------------------------------------------------------------
     [INFO] BUILD SUCCESS
     [INFO] ------------------------------------------------------------------------
     [INFO] Total time:  9.077 s
     [INFO] Finished at: 2021-09-07T16:02:16-04:00
     [INFO] ------------------------------------------------------------------------
-    ```
+```
 
     1. If you do not have Maven installed
     
         1. Extract the example-fhir-knative-target.zip file.
 
-        ```
+    ```
         unzip -qu example-fhir-knative-target.zip
-        ```
+    ```
 
         1. Check the files exist
 
-        ```
+    ```
         ls -1 target
-        ```
+    ```
 
         You'll see: 
 
-        ```
+    ```
         classes
         fhir-knative-99-SNAPSHOT.jar
         generated-sources
@@ -241,79 +241,79 @@ There is also a strong requirement for Java 11 installed on your machine. You ca
         quarkus-app
         quarkus-artifact.properties
         test-classes
-        ```
+    ```
 
 1. Build the Docker image
 
-    ```
+```
     docker build -qf src/main/docker/Dockerfile -t example/fhir-knative-jvm:latest .
-    ```
+```
 
     You'll see the image built, and named.
 
-    ```
+```
     sha256:46991973ed52828793cfbab5f16cdd1608576e1f29d9183c6e5d04af9ee41e83
-    ```
+```
 
 ### 6. Push to the OpenShift Container Registry
 
 1. Change to your project, such as `my-fhir-project`. If you need to create a project, you can first run `oc new-project my-fhir-project` to create a project.
 
-    ```
+```
     oc project my-fhir-project
-    ```
+```
 
     You have changed your name space
 
-    ```
+```
     Now using project "my-fhir-project" on server "https://host.us-east.containers.cloud.ibm.com:9999".
-    ```
+```
 
 1. Check the OpenShift Image registry host
 
-    ```
+```
     oc get route default-route -n openshift-image-registry --template='{{ .spec.host }}'
-    ```
+```
     
     You see the hostname printed. 
 
-    ```
+```
     default-route-openshift-image-registry.healthcare-serverless-9999-0000.us-east.containers.appdomain.cloud
-    ```
+```
 
 1. Create an image stream
 
-    ```
+```
     oc create imagestream fhir-knative-jvm
-    ```
+```
 
     You see a new image stream is created.
 
-    ```
+```
     imagestream.image.openshift.io/fhir-knative-jvm created
-    ```
+```
 
 1. Tag the Image for the Image Registry
 
-    ```
+```
     docker tag example/fhir-knative-jvm:latest $(oc get route default-route -n openshift-image-registry --template='{{ .spec.host }}')/$(oc project --short=true)/fhir-knative-jvm:latest
-    ```
+```
 
 1. Login to the Image Registry, and confirm you see `Login Succeeded`.
 
-    ```
+```
     docker login -u `oc whoami` -p `oc whoami --show-token` $(oc get route default-route -n openshift-image-registry --template='{{ .spec.host }}')
-    ```
+```
 
 1. Push the Image into the OpenShift Image Registry
 
-    ```
+```
     docker push $(oc get route default-route -n openshift-image-registry --template='{{ .spec.host }}')/$(oc project --short=true)/fhir-knative-jvm:latest
-    ```
+```
 
     You see the image is on the server
 
-    ```
+```
     The push refers to repository [default-route-openshift-image-registry.healthcare-serverless-99999-0000.us-east.containers.appdomain.cloud/my-fhir-project/fhir-knative-jvm]
     5f70bf18a086: Pushed 
     d23bc788009e: Pushed 
@@ -321,31 +321,31 @@ There is also a strong requirement for Java 11 installed on your machine. You ca
     e7ed17121dee: Mounted from fhir-serverless/fhir-knative-jvm 
     785573c4b945: Mounted from fhir-serverless/fhir-knative-jvm 
     latest: digest: sha256:27e52ab6a53cfc2d74350b230eb0c8693af0875c63c66f117f386cadb08fbf44 size: 1357
-    ```
+```
 
 1. Make the local registry lookup use relative names
 
-    ```
+```
     oc set image-lookup  --all
-    ```
+```
 
     You see, and now you can use relative names to find your image.
 
-    ```
+```
     imagestream.image.openshift.io/fhir-knative-jvm image lookup updated
-    ```
+```
 
 ### 7. Create the OpenShift Serverless service
 
 1. Create the Knative service
 
-    ```
+```
     kn service create myfhir --force --image image-registry.openshift-image-registry.svc:5000/$(oc project --short=true)/fhir-knative-jvm
-    ```
+```
 
     You see the revision of the Knative application is made available.
 
-    ```
+```
     Replacing service 'myfhir' in namespace 'my-fhir-project':
 
     0.213s Configuration "myfhir" does not have any ready Revision.
@@ -358,7 +358,7 @@ There is also a strong requirement for Java 11 installed on your machine. You ca
 
     Service 'myfhir' replaced to latest revision 'myfhir-00001' is available at URL:
     http://myfhir-my-fhir-project.healthcare-serverless-9999-0000.us-east.containers.appdomain.cloud
-    ```
+```
 
 ## **Test**
 
@@ -366,27 +366,27 @@ There is also a strong requirement for Java 11 installed on your machine. You ca
 
 1. Check the url endpoint
 
-    ```
+```
     kn service describe myfhir -o url 
-    ```
+```
 
     You see: 
 
-    ``` 
+``` 
     http://fhir-loadero-fhir-serverless.healthcare-serverless-99999-0000.us-east.containers.appdomain.cloud
-    ```
+```
 
 1. Call the Serverless project with example first and last names.
 
-    ```
+```
     curl $(kn service describe myfhir -o url)'/v1/api/loader?last=John&first=Smith'
-    ```
+```
 
     You see the URLs generated for the new Patient data.
 
-    ```
+```
     [https://fhirserver-dev-fhir-serverless.healthcare-serverless-250babbbe4c3000e15508cd07c1d282b-0000.us-east.containers.appdomain.cloud/fhir-server/api/v4/Patient/dc7857d3-b5b8-4267-bdc5-14f86848ea7c/_history/1, https://fhirserver-dev-fhir-serverless.healthcare-serverless-250babbbe4c3000e15508cd07c1d282b-0000.us-east.containers.appdomain.cloud/fhir-server/api/v4/Observation/17bc7e604ee-556a98d0-08bf-4026-a3cd-b237cca895ca/_history/1, https://fhirserver-dev-fhir-serverless.healthcare-serverless-250babbbe4c3000e15508cd07c1d282b-0000.us-east.containers.appdomain.cloud/fhir-server/api/v4/Medication/b537a83b-0b06-4b07-8332-9801ca7022b2/_history/1, https://fhirserver-dev-fhir-serverless.healthcare-serverless-250babbbe4c3000e15508cd07c1d282b-0000.us-east.containers.appdomain.cloud/fhir-server/api/v4/MedicationAdministration/17bc7e6052c-a074acff-86db-4ef6-9aac-2195eb7e9118/_history/1]
-    ```
+```
 
 ### 9. Confirm Your data is loaded using FHIR Search
 
@@ -394,13 +394,13 @@ There is also a strong requirement for Java 11 installed on your machine. You ca
 
 1. Confirm the Patient is loaded using IBM FHIR Server's Search support. Be sure to include the URL in Double Quotes.
 
-    ```
+```
     curl -k -u fhiruser:change-password "https://fhirserver-dev-hir-serverless.healthcare-serverless-250babbbe4c3000e15508cd07c1d282b-0000.us-east.containers.appdomain.cloud/fhir-server/api/v4/Patient?_id=dc7857d3-b5b8-4267-bdc5-14f86848ea7c&_pretty=true"
-    ```
+```
 
     You see the FHIR R4 Patient Resource
 
-    ``` json
+``` json
     {
         "resourceType": "Bundle",
         "id": "30b39c61-3803-4ece-a502-a676975eb1d5",
@@ -450,7 +450,7 @@ There is also a strong requirement for Java 11 installed on your machine. You ca
             }
         ]
     }
-    ```
+```
 
 You have successfully loaded your IBM FHIR Server with Healthcare Data using a Serverless project.
 
@@ -458,17 +458,17 @@ You have successfully loaded your IBM FHIR Server with Healthcare Data using a S
 
 1. Call the Serverless project with example first and last names.
 
-    ```
+```
     curl $(kn service describe myfhir -o url)'/v1/api/report'
-    ```
+```
 
     You see the report generated by querying the backend FHIR Data.
 
-    ``` sh
+``` sh
     Total Number of Medication Administrations Today are: 2
     [0] Smith, John
     [1] Smith, John
-    ```
+```
 
 If there is more than one Patient created, you'll notice your report gets slightly more complicated as it reports on the total Patients that have Medications administered to them.
 
