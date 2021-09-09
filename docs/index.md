@@ -67,7 +67,7 @@ The lab proctors have previously completed the <a href="#setup"><b>Appendix: Set
         --server=https://***.us-east.containers.cloud.ibm.com:32689
     ~~~
 
-You will see: 
+    You see: 
 
     ~~~ sh
     Logged into "https://****.us-east.containers.cloud.ibm.com:32689" as "IAM#***" using the token provided.
@@ -601,51 +601,52 @@ The following outlines the steps necessary to setup the IBM FHIR Server Operator
 
 1. On a terminal window, paste the contents on the terminal.
 
-```
-oc login --token=sha256~*** --server=https://***.us-east.containers.cloud.ibm.com:32689
-```
+    ~~~ sh
+    oc login --token=sha256~*** \
+        --server=https://***.us-east.containers.cloud.ibm.com:32689
+    ~~~
 
-You will see: 
+    You see: 
 
-```
-Logged into "https://****.us-east.containers.cloud.ibm.com:32689" as "IAM#***" using the token provided.
+    ~~~ sh
+    Logged into "https://****.us-east.containers.cloud.ibm.com:32689" as "IAM#***" using the token provided.
 
-You have access to 69 projects, the list has been suppressed. You can list all projects with 'oc projects'
+    You have access to 69 projects, the list has been suppressed. You can list all projects with 'oc projects'
 
-Using project "default".
-```
+    Using project "default".
+    ~~~
 
 1. Create a file for the IBM Operator Catalog source with the following content, and save as IBMCatalogSource.yml:
 
-```
-cat << EOF > IBMCatalogSource.yml
-apiVersion: operators.coreos.com/v1alpha1
-kind: CatalogSource
-metadata:
-   name: ibm-operator-catalog
-   namespace: openshift-marketplace
-spec:
-   displayName: "IBM Operator Catalog"
-   publisher: IBM
-   sourceType: grpc
-   image: docker.io/ibmcom/ibm-operator-catalog
-   updateStrategy:
-     registryPoll:
-       interval: 45m
-EOF
-```
+    ~~~ yaml
+    cat << EOF > IBMCatalogSource.yml
+    apiVersion: operators.coreos.com/v1alpha1
+    kind: CatalogSource
+    metadata:
+    name: ibm-operator-catalog
+    namespace: openshift-marketplace
+    spec:
+    displayName: "IBM Operator Catalog"
+    publisher: IBM
+    sourceType: grpc
+    image: docker.io/ibmcom/ibm-operator-catalog
+    updateStrategy:
+        registryPoll:
+        interval: 45m
+    EOF
+    ~~~
 
 1. Apply the source by using the following command:
 
-```
-oc apply -f IBMCatalogSource.yml
-```
+    ~~~ sh
+    oc apply -f IBMCatalogSource.yml
+    ~~~
 
-1. Upon success, you will see: 
+1. Upon success, you see: 
 
-```
-catalogsource.operators.coreos.com/ibm-operator-catalog created
-```
+    ~~~
+    catalogsource.operators.coreos.com/ibm-operator-catalog created
+    ~~~
 
 #### **5. Setup the IBM FHIR Server Operator**
 
