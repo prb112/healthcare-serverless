@@ -1,4 +1,4 @@
-theme: jekyll-theme-minimal
+theme: hacker
 markdown: kramdown
 kramdown:
   parse_block_html: true
