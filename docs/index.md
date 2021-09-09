@@ -486,7 +486,7 @@ In this lab, you have built a simple healthcare serverless application using Red
 
 # **Appendix: Setup**
 
-## **Setup** PostgreSQL Instance
+#### **Setup** PostgreSQL Instance
 
 To support the IBM FHIR Server's schema, a [IBM® Cloud Databases for PostgreSQL](https://cloud.ibm.com/databases/databases-for-postgresql/create) database with at least one user with `max_connections` and `max_prepared_transactions` configured as shown in the below script.
 
@@ -499,7 +499,7 @@ ibmcloud cdb deployment-configuration serverless-db '{"max_prepared_transactions
 ibmcloud cdb deployment-user-create serverless-db fhirserver
 ```
 
-## **Setup** IBM FHIR Server Operator
+#### **Setup** IBM FHIR Server Operator
 
 The following outlines the steps necessary to setup the IBM FHIR Server Operator.
 
@@ -511,7 +511,7 @@ The following outlines the steps necessary to setup the IBM FHIR Server Operator
 6. Create an IBM FHIR Server instance
 7. Create a Route
 
-### **1. Setup the IBM Managed OpenShift**
+#### **1. Setup the IBM Managed OpenShift**
 
 1. Log in to [IBM Cloud](https://cloud.ibm.com/kubernetes/clusters)
 
@@ -535,7 +535,7 @@ The following outlines the steps necessary to setup the IBM FHIR Server Operator
 
 1. Click on OpenShift Web Console
 
-### **2. Install Red Hat OpenShift Serverless Operator**
+#### **2. Install Red Hat OpenShift Serverless Operator**
 
 1. Click on **Operators** > **OperatorHub**
 
@@ -559,7 +559,7 @@ The following outlines the steps necessary to setup the IBM FHIR Server Operator
 
 1. Click View Operator
 
-### **3. Install Knative Serving**
+#### **3. Install Knative Serving**
 
 1. Switch Project to the knative-serving namespace
 
@@ -569,7 +569,7 @@ The following outlines the steps necessary to setup the IBM FHIR Server Operator
 
 1. Click Create
 
-### **4. Add the IBM FHIR Server operator to the catalog**
+#### **4. Add the IBM FHIR Server operator to the catalog**
 
 1. Click on the User dropdown in the Upper Right > Copy Login Command
 
@@ -623,7 +623,7 @@ oc apply -f IBMCatalogSource.yml
 catalogsource.operators.coreos.com/ibm-operator-catalog created
 ```
 
-### **5. Setup the IBM FHIR Server Operator**
+#### **5. Setup the IBM FHIR Server Operator**
 
 1. Click on **Operators** > **OperatorHub**
 
@@ -655,7 +655,7 @@ catalogsource.operators.coreos.com/ibm-operator-catalog created
 
 1. Click View Operator
 
-### **6. Create an IBM FHIR Server instance**
+#### **6. Create an IBM FHIR Server instance**
 
 1. Download the IBM FHIR Server configuration for Postgres the fhir-server-config.json.  Note, [this version](https://github.com/IBM/FHIR/blob/4.6.1/fhir-server/liberty-config/config/default/fhir-server-config-postgresql.json) is from the 4.6.1 release which matches the Operator's version.
 
