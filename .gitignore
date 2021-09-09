@@ -1,3 +1,4 @@
+# maven
 target/
 pom.xml.tag
 pom.xml.releaseBackup
@@ -7,5 +8,16 @@ release.properties
 dependency-reduced-pom.xml
 buildNumber.properties
 .mvn/timing.properties
-# https://github.com/takari/maven-wrapper#usage-without-binary-jar
 .mvn/wrapper/maven-wrapper.jar
+
+# used in the IBM FHIR Server secret
+persistence.json
+fhir-server-config.json
+datasource.xml
+admin.txt
+user.txt
+db.cert
+host.xml
+timeout.txt
+hostname.txt
+cp/
