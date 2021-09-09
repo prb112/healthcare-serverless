@@ -32,7 +32,7 @@ Each attendee should complete the Prerequisites section.
 
 ## **Prerequisites**
 
-The lab proctors have previously completed the `Appendix: Setup`. If you are running outside of the Lab Environment, prior to completing the Project and Test sections, please complete the `Appendix: Setup`.
+The lab proctors have previously completed the [Appendix: Setup](#Setup). If you are running outside of the Lab Environment, prior to completing the Project and Test sections, please complete the [Appendix: Setup](#Setup).
 
 1. Install Docker [docker](https://docs.docker.com/engine/install/)
 
@@ -101,7 +101,7 @@ Plug-in 'observe-service 1.0.61' was successfully installed into /Users/example/
 
 There is also a strong requirement for Java 11 installed on your machine. You can download from the [AdoptOpenJDK website](https://adoptopenjdk.net/installation.html#)
 
-## *Project*
+# *Project*
 
 ### 1. Connect with the IBM Cloud CLI and OpenShift CLI
 
@@ -360,7 +360,7 @@ You should see `BUILD SUCCESS`. Note, if you do not, you
     http://myfhir-my-fhir-project.healthcare-serverless-9999-0000.us-east.containers.appdomain.cloud
 ```
 
-## **Test**
+# **Test**
 
 ### 8. Test the Serverless Function to load data
 
@@ -485,6 +485,8 @@ In this lab, you have built a simple healthcare serverless application using Red
 - [HL7 Zulip: #ibm](https://chat.fhir.org/#narrow/stream/212434-ibm)
 
 # **Appendix: Setup**
+
+<a link="Setup"/>
 
 #### **Setup** PostgreSQL Instance
 
