@@ -62,43 +62,45 @@ The lab proctors have previously completed the <a href="#setup"><b>Appendix: Set
 
 1. On a terminal window, paste the contents on the terminal.
 
-~~~ sh
-oc login --token=sha256~*** --server=https://***.us-east.containers.cloud.ibm.com:32689
-~~~
+    ~~~ sh
+    oc login --token=sha256~*** \
+        --server=https://***.us-east.containers.cloud.ibm.com:32689
+    ~~~
 
 You will see: 
 
-```
-Logged into "https://****.us-east.containers.cloud.ibm.com:32689" as "IAM#***" using the token provided.
+    ~~~ sh
+    Logged into "https://****.us-east.containers.cloud.ibm.com:32689" as "IAM#***" using the token provided.
 
-You have access to 69 projects, the list has been suppressed. You can list all projects with 'oc projects'
+    You have access to 69 projects, the list has been suppressed. You can list all projects with 'oc projects'
 
-Using project "default".
-```
+    Using project "default".
+    ~~~
 
 ### 2. Clone the repo
 
 1. Clone the repository 
 
-```
-git clone https://github.com/prb112/healthcare-serverless.git
-```
+    ```
+    git clone https://github.com/prb112/healthcare-serverless.git
+    ```
 
-You see the repository is cloned and unpacked.
+    You see the repository is cloned and unpacked.
 
-```
-Cloning into 'healthcare-serverless'...
-remote: Enumerating objects: 10, done.
-remote: Counting objects: 100% (10/10), done.
-remote: Compressing objects: 100% (7/7), done.
-remote: Total 10 (delta 1), reused 6 (delta 1), pack-reused 0
-Unpacking objects: 100% (10/10), done.
-```
+    ```
+    Cloning into 'healthcare-serverless'...
+    remote: Enumerating objects: 10, done.
+    remote: Counting objects: 100% (10/10), done.
+    remote: Compressing objects: 100% (7/7), done.
+    remote: Total 10 (delta 1), reused 6 (delta 1), pack-reused 0
+    Unpacking objects: 100% (10/10), done.
+    ```
+
 1. Change to the healthcare-serverless repository
 
-```
-cd healthcare-serverless
-```
+    ~~~ sh
+    cd healthcare-serverless
+    ~~~
 
 ### 3. Download and Configure Project
 
