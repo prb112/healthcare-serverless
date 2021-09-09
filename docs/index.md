@@ -49,48 +49,48 @@ ibmcloud plugin install container-service -f
 ```
 
 ``` shell
-    Looking up 'container-service' from repository 'IBM Cloud'...
-    Plug-in 'container-service/kubernetes-service 1.0.312' found in repository 'IBM Cloud'
-    Attempting to download the binary file...
-    29.13 MiB / 29.13 MiB [=====================================================================================================================================================================================================================================================================================================================================================] 100.00% 3s
-    30539808 bytes downloaded
-    Installing binary...
-    OK
-    Plug-in 'container-service 1.0.312' was successfully installed into /Users/example/.bluemix/plugins/container-service. Use 'ibmcloud plugin show container-service' to show its details.
+Looking up 'container-service' from repository 'IBM Cloud'...
+Plug-in 'container-service/kubernetes-service 1.0.312' found in repository 'IBM Cloud'
+Attempting to download the binary file...
+29.13 MiB / 29.13 MiB [========================================================] 100.00% 3s
+30539808 bytes downloaded
+Installing binary...
+OK
+Plug-in 'container-service 1.0.312' was successfully installed into /Users/example/.bluemix/plugins/container-service. Use 'ibmcloud plugin show container-service' to show its details.
 ```
 
 ### *Plugin: Container Registry*
 
 ``` shell
-    ibmcloud plugin install container-registry -f
+ibmcloud plugin install container-registry -f
 ```
 
 ```
-    Looking up 'container-registry' from repository 'IBM Cloud'...
-    Plug-in 'container-registry 0.1.543' found in repository 'IBM Cloud'
-    Attempting to download the binary file...
-    26.28 MiB / 26.28 MiB [=====================================================================================================================================================================================================================================================================================================================================================] 100.00% 2s
-    27560704 bytes downloaded
-    Installing binary...
-    OK
-    Plug-in 'container-registry 0.1.543' was successfully installed into /Users/example/.bluemix/plugins/container-registry. Use 'ibmcloud plugin show container-registry' to show its details.
+Looking up 'container-registry' from repository 'IBM Cloud'...
+Plug-in 'container-registry 0.1.543' found in repository 'IBM Cloud'
+Attempting to download the binary file...
+26.28 MiB / 26.28 MiB [=====================================================] 100.00% 2s
+27560704 bytes downloaded
+Installing binary...
+OK
+Plug-in 'container-registry 0.1.543' was successfully installed into /Users/example/.bluemix/plugins/container-registry. Use 'ibmcloud plugin show container-registry' to show its details.
 ```
 
 ### *Plugin: Observe Service*
 
 ``` shell
-    ibmcloud plugin install observe-service -f
+ibmcloud plugin install observe-service -f
 ```
 
 ```
-    Looking up 'observe-service' from repository 'IBM Cloud'...
-    Plug-in 'observe-service 1.0.61' found in repository 'IBM Cloud'
-    Attempting to download the binary file...
-    17.70 MiB / 17.70 MiB [=====================================================================================================================================================================================================================================================================================================================================================] 100.00% 1s
-    18561888 bytes downloaded
-    Installing binary...
-    OK
-    Plug-in 'observe-service 1.0.61' was successfully installed into /Users/example/.bluemix/plugins/observe-service. Use 'ibmcloud plugin show observe-service' to show its details.
+Looking up 'observe-service' from repository 'IBM Cloud'...
+Plug-in 'observe-service 1.0.61' found in repository 'IBM Cloud'
+Attempting to download the binary file...
+17.70 MiB / 17.70 MiB [==================================================] 100.00% 1s
+18561888 bytes downloaded
+Installing binary...
+OK
+Plug-in 'observe-service 1.0.61' was successfully installed into /Users/example/.bluemix/plugins/observe-service. Use 'ibmcloud plugin show observe-service' to show its details.
 ```
 
 5. Install the `kubectl` and the `oc` following the directions at [https://cloud.ibm.com/docs/openshift?topic=openshift-openshift-cli](https://cloud.ibm.com/docs/openshift?topic=openshift-openshift-cli)
@@ -117,18 +117,18 @@ There is also a strong requirement for Java 11 installed on your machine. You ca
 
 1. On a terminal window, paste the contents on the terminal.
 
+``` sh
+oc login --token=sha256~*** --server=https://***.us-east.containers.cloud.ibm.com:32689
 ```
-    oc login --token=sha256~*** --server=https://***.us-east.containers.cloud.ibm.com:32689
-```
 
-    You will see: 
+You will see: 
 
 ```
-    Logged into "https://****.us-east.containers.cloud.ibm.com:32689" as "IAM#***" using the token provided.
+Logged into "https://****.us-east.containers.cloud.ibm.com:32689" as "IAM#***" using the token provided.
 
-    You have access to 69 projects, the list has been suppressed. You can list all projects with 'oc projects'
+You have access to 69 projects, the list has been suppressed. You can list all projects with 'oc projects'
 
-    Using project "default".
+Using project "default".
 ```
 
 ### 2. Clone the repo
@@ -136,23 +136,23 @@ There is also a strong requirement for Java 11 installed on your machine. You ca
 1. Clone the repository 
 
 ```
-    git clone https://github.com/prb112/healthcare-serverless.git
+git clone https://github.com/prb112/healthcare-serverless.git
 ```
 
-    You see the repository is cloned and unpacked.
+You see the repository is cloned and unpacked.
 
 ```
-    Cloning into 'healthcare-serverless'...
-    remote: Enumerating objects: 10, done.
-    remote: Counting objects: 100% (10/10), done.
-    remote: Compressing objects: 100% (7/7), done.
-    remote: Total 10 (delta 1), reused 6 (delta 1), pack-reused 0
-    Unpacking objects: 100% (10/10), done.
+Cloning into 'healthcare-serverless'...
+remote: Enumerating objects: 10, done.
+remote: Counting objects: 100% (10/10), done.
+remote: Compressing objects: 100% (7/7), done.
+remote: Total 10 (delta 1), reused 6 (delta 1), pack-reused 0
+Unpacking objects: 100% (10/10), done.
 ```
 1. Change to the healthcare-serverless repository
 
 ```
-    cd healthcare-serverless
+cd healthcare-serverless
 ```
 
 ### 3. Download and Configure Project with Visual Code
@@ -162,7 +162,7 @@ There is also a strong requirement for Java 11 installed on your machine. You ca
 1. Change directory to the `example-fhir-knative` project
 
 ```
-    cd example-fhir-knative
+cd example-fhir-knative
 ```
 
 1. Review the Java Code
@@ -172,88 +172,88 @@ There is also a strong requirement for Java 11 installed on your machine. You ca
 1. Grab the endpoint from the OpenShift Secret
 
 ```
-    oc get secret fhirhostname --namespace=default -o jsonpath='{.data.IBM_FHIR_SERVER_HOSTNAME}' | base64 -d
+oc get secret fhirhostname --namespace=default -o jsonpath='{.data.IBM_FHIR_SERVER_HOSTNAME}' | base64 -d
 ```
 
-    You see the IBM FHIR Server endpoint.
+You see the IBM FHIR Server endpoint.
 
 ```
-    myserver.example.org
+myserver.example.org
 ```
 
-1. Edit the `src/main/resources/endpoint.properties`
+2. Edit the `src/main/resources/endpoint.properties`
 
-1. Update `fhirclient.rest.base.url` so you have `fhirclient.rest.base.url=myserver.example.org`
+3. Update `fhirclient.rest.base.url` so you have `fhirclient.rest.base.url=myserver.example.org`
 
-1. Review the API, and you'll see how the API takes Query Parameters first and last name, and runs the Client.
+4. Review the API, and you'll see how the API takes Query Parameters first and last name, and runs the Client.
 
 - `src/main/java/com/ibm/fhir/example/knative/Loader.java`
 - `src/main/java/com/ibm/fhir/example/knative/Report.java`
 
-1. Review the `/src/main/java/com/ibm/fhir/example/Client.java` and you'll find the dependency `fhir-client` is used to call the backend. The backend configuration is loaded from the endpoint.properties, and facilitates the creation and retrieval of FHIR data.
+5. Review the `/src/main/java/com/ibm/fhir/example/Client.java` and you'll find the dependency `fhir-client` is used to call the backend. The backend configuration is loaded from the endpoint.properties, and facilitates the creation and retrieval of FHIR data.
 
-1. Review the `/src/main/java/com/ibm/fhir/example/BundleGenerator.java` and you'll see the `fhir-model` is used to build a set of resources in the HL7 FHIR Standard.
+6. Review the `/src/main/java/com/ibm/fhir/example/BundleGenerator.java` and you'll see the `fhir-model` is used to build a set of resources in the HL7 FHIR Standard.
 
 ### 5. Build the Serverless project
 
 1. Build the project resources
 
-    1. If you have Maven installed: 
+1. If you have Maven installed: 
 
 ```
-    mvn clean install
+mvn clean install
 ```
 
-    You should see `BUILD SUCCESS`. Note, if you do not, you 
+You should see `BUILD SUCCESS`. Note, if you do not, you 
 
 ```
-    [INFO] ------------------------------------------------------------------------
-    [INFO] BUILD SUCCESS
-    [INFO] ------------------------------------------------------------------------
-    [INFO] Total time:  9.077 s
-    [INFO] Finished at: 2021-09-07T16:02:16-04:00
-    [INFO] ------------------------------------------------------------------------
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  9.077 s
+[INFO] Finished at: 2021-09-07T16:02:16-04:00
+[INFO] ------------------------------------------------------------------------
 ```
 
-    1. If you do not have Maven installed
-    
-        1. Extract the example-fhir-knative-target.zip file.
+1. If you do not have Maven installed
+
+    1. Extract the example-fhir-knative-target.zip file.
 
     ```
-        unzip -qu example-fhir-knative-target.zip
+    unzip -qu example-fhir-knative-target.zip
     ```
 
-        1. Check the files exist
+    1. Check the files exist
 
     ```
-        ls -1 target
+    ls -1 target
     ```
 
-        You'll see: 
+    You'll see: 
 
     ```
-        classes
-        fhir-knative-99-SNAPSHOT.jar
-        generated-sources
-        generated-test-sources
-        maven-archiver
-        maven-status
-        quarkus-app
-        quarkus-artifact.properties
-        test-classes
+    classes
+    fhir-knative-99-SNAPSHOT.jar
+    generated-sources
+    generated-test-sources
+    maven-archiver
+    maven-status
+    quarkus-app
+    quarkus-artifact.properties
+    test-classes
     ```
 
 1. Build the Docker image
 
-```
+    ```
     docker build -qf src/main/docker/Dockerfile -t example/fhir-knative-jvm:latest .
-```
+    ```
 
     You'll see the image built, and named.
 
-```
+    ```
     sha256:46991973ed52828793cfbab5f16cdd1608576e1f29d9183c6e5d04af9ee41e83
-```
+    ```
 
 ### 6. Push to the OpenShift Container Registry
 
