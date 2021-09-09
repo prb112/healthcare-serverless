@@ -40,9 +40,9 @@ The lab proctors have previously completed the <a href="#setup"><b>Appendix: Set
 
 2. Log in, or create an account on [IBM Cloud](https://cloud.ibm.com)
 
-3. Install the Red Hat OpenShift cli `oc`. [Link](https://cloud.ibm.com/docs/openshift?topic=openshift-openshift-cli)
+3. Install the Red Hat OpenShift cli `oc` [Link  to the Install](https://cloud.ibm.com/docs/openshift?topic=openshift-openshift-cli)
 
-4. Install the Knative cli `kn`. [Link](https://knative.dev/docs/client/install-kn/)
+4. Install the Knative cli `kn` [Link to the Install](https://knative.dev/docs/client/install-kn/)
 
 5. *Optional*: Install Maven [mvn](https://maven.apache.org/download.cgi) and Java.  You should use Java 11 for this lab. You can download from the [AdoptOpenJDK website](https://adoptopenjdk.net/installation.html#)
 
