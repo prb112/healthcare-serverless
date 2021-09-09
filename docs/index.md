@@ -19,7 +19,7 @@ Each attendee should complete the Prerequisites section.
 #### **Project**
 1. Connect with the IBM Cloud CLI and OpenShift CLI
 2. Clone the repo
-3. Download and Configure Project with Visual Code
+3. Download and Configure Project
 4. Modify the Serverless project
 5. Build the Serverless project
 6. Push to the OpenShift Container Registry
@@ -98,15 +98,15 @@ Unpacking objects: 100% (10/10), done.
 cd healthcare-serverless
 ```
 
-### 3. Download and Configure Project with Visual Code
+### 3. Download and Configure Project
 
-1. Open with your preferred editor (such as Visual Code)
+1. Open with your preferred Integrated Development Environment, such as [Visual Code](https://code.visualstudio.com/).
 
 1. Change directory to the `example-fhir-knative` project
 
-```
-cd example-fhir-knative
-```
+    ```
+    cd example-fhir-knative
+    ```
 
 1. Review the Java Code
 
@@ -114,15 +114,15 @@ cd example-fhir-knative
 
 1. Grab the endpoint from the OpenShift Secret
 
-```
-oc get secret fhirhostname --namespace=default -o jsonpath='{.data.IBM_FHIR_SERVER_HOSTNAME}' | base64 -d
-```
+    ```
+    oc get secret fhirhostname --namespace=default -o jsonpath='{.data.IBM_FHIR_SERVER_HOSTNAME}' | base64 -d
+    ```
 
-You see the IBM FHIR Server endpoint.
+    You see the IBM FHIR Server endpoint.
 
-```
-myserver.example.org
-```
+    ```
+    myserver.example.org
+    ```
 
 2. Edit the `src/main/resources/endpoint.properties`
 
@@ -130,8 +130,8 @@ myserver.example.org
 
 4. Review the API, and you'll see how the API takes Query Parameters first and last name, and runs the Client.
 
-- `src/main/java/com/ibm/fhir/example/knative/Loader.java`
-- `src/main/java/com/ibm/fhir/example/knative/Report.java`
+    - `src/main/java/com/ibm/fhir/example/knative/Loader.java`
+    - `src/main/java/com/ibm/fhir/example/knative/Report.java`
 
 5. Review the `/src/main/java/com/ibm/fhir/example/Client.java` and you'll find the dependency `fhir-client` is used to call the backend. The backend configuration is loaded from the endpoint.properties, and facilitates the creation and retrieval of FHIR data.
 
