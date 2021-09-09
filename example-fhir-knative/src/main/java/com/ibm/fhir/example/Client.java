@@ -71,12 +71,12 @@ public class Client {
         Collection<FHIRPathNode> result = evaluator.evaluate(responseBundle, "entry.response.location");
 
         // Convert the Path Nodes to the List of Locations
-        List<String> lisOfLocations = new ArrayList<>();
+        List<String> listOfLocations = new ArrayList<>();
         for (FHIRPathNode node : result) {
             String loc = node.asElementNode().element().as(com.ibm.fhir.model.type.Uri.class).getValue();
-            lisOfLocations.add(props.getProperty("fhirclient.rest.base.url") + "/" +  loc);
+            listOfLocations.add(props.getProperty("fhirclient.rest.base.url") + "/" +  loc);
         }
-        return lisOfLocations;
+        return listOfLocations;
     }
 
     /**

@@ -131,18 +131,194 @@ Once you have the project in the IDE, you are ready to
     https://myserver.example.org/fhir-server/api/v4
     ```
 
-2. Edit the `src/main/resources/endpoint.properties`
+2. Edit the `src/main/resources/endpoint.properties` a simple properties file. If you are using this pattern in production, you can load this file from a secret.
 
 3. Update `fhirclient.rest.base.url` so you have `fhirclient.rest.base.url=https://myserver.example.org/fhir-server/api/v4`
 
 4. Review the API, and you'll see how the API takes Query Parameters first and last name, and runs the Client.
 
-    - `src/main/java/com/ibm/fhir/example/knative/Loader.java`
-    - `src/main/java/com/ibm/fhir/example/knative/Report.java`
+    - `src/main/java/com/ibm/fhir/example/knative/Loader.java` - The Loader API takes two simple HTTP Query Parameters, a first and last name, and submits a FHIR Bundle for the User identified by firstName and lastName.
+        
+        ``` java
+        @Path("/v1/api/loader")
+        public class Loader {
+
+            @GET
+            @Produces(MediaType.TEXT_PLAIN)
+            public List<String> loadPatient(
+                    @QueryParam(value="first") String firstName,
+                    @QueryParam(value="last") String lastName) throws Exception {
+
+                try { 
+                    Client client = new Client();
+                    return client.submitBundle(firstName, lastName);
+                } catch (Exception e) { 
+                    return Arrays.asList(e.toString() + "/" + e);
+                }
+            }
+        }
+        ```
+
+    - `src/main/java/com/ibm/fhir/example/knative/Report.java` - The Report API calls the Client API.
+
+        ``` java
+        @Path("/v1/api/report")
+        public class Report {
+
+            @GET
+            @Produces(MediaType.TEXT_PLAIN)
+            public String generateReport() throws Exception {
+                Client client = new Client();
+                return client.buildReport();
+            }
+        }
+        ```
 
 5. Review the `/src/main/java/com/ibm/fhir/example/Client.java` and you'll find the dependency `fhir-client` is used to call the backend. The backend configuration is loaded from the endpoint.properties, and facilitates the creation and retrieval of FHIR data.
 
+    The submitBundle creates a FHIRClient loads an endpoint configuration, and submits a generated bundle to the backend and generates a list of Resources extracted using the `fhir-path` module.
+
+    ``` java
+    public List<String> submitBundle(String firstName, String lastName) throws Exception {
+        Properties props = generateProperties();
+        FHIRClient client = FHIRClientFactory.getClient(props);
+
+        BundleGenerator generator = new BundleGenerator();
+        Bundle bundle = generator.sampleData(firstName, lastName);
+
+        Entity<Bundle> entity = Entity.entity(bundle, FHIRMediaType.APPLICATION_FHIR_JSON);
+        Response response = client.getWebTarget().request().post(entity, Response.class);
+        Bundle responseBundle = response.readEntity(Bundle.class);
+        LOG.info("The Response is " + responseBundle);
+
+        FHIRPathEvaluator evaluator = FHIRPathEvaluator.evaluator();
+        Collection<FHIRPathNode> result = evaluator.evaluate(responseBundle, "entry.response.location");
+
+        // Convert the Path Nodes to the List of Locations
+        List<String> listOfLocations = new ArrayList<>();
+        for (FHIRPathNode node : result) {
+            String loc = node.asElementNode().element().as(com.ibm.fhir.model.type.Uri.class).getValue();
+            listOfLocations.add(props.getProperty("fhirclient.rest.base.url") + "/" +  loc);
+        }
+        return listOfLocations;
+    }
+    ```
+
+    The buildReport also uses the FHIRClient to call the backend using Search Parameters (HTTP Query parameters) and returns a FHIR Bundle in the `application/fhir+json` format. The content is extracted, and the total number of Patients with [MedicationAdministration](https://www.hl7.org/fhir/medicationadministration.html) resources today are returned. From this basic pattern you can execute even more complicated healtcare queries.
+
+    ``` java
+    public String buildReport() throws Exception {
+        FHIRClient client = FHIRClientFactory.getClient(generateProperties());
+        
+        ZonedDateTime zdt = ZonedDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        
+        String ymd = formatter.format(zdt);
+
+        Response response = client.getWebTarget()
+                                    .path("/MedicationAdministration")
+                                    .queryParam("_include", "MedicationAdministration:patient")
+                                    .queryParam("_include", "MedicationAdministration:medication")
+                                    .queryParam("_lastUpdated", ymd)
+                                    .request(FHIRMediaType.APPLICATION_FHIR_JSON)
+                                    .header("X-FHIR-TENANT-ID", "default")
+                                    .header("X-FHIR-DSID", "default")
+                                    .header("Content-Type", "application/fhir+json")
+                                    .get(Response.class);
+
+        Bundle responseBundle = response.readEntity(Bundle.class);
+        LOG.info("The Report Response is " + responseBundle);
+
+        StringBuilder builder = new StringBuilder();
+
+        // Output the number of MedicationAdministrations
+        builder.append("Total Number of Medication Administrations Today are: ")
+                .append(responseBundle.getTotal().getValue());
+        builder.append("\n");
+
+        // Use FHIRPath to Extract the Entry Resource
+        FHIRPathEvaluator evaluator = FHIRPathEvaluator.evaluator();
+        Collection<FHIRPathNode> result = evaluator.evaluate(responseBundle, "Bundle.entry.resource");
+
+        // Convert the Path Nodes to Patient Names
+        int idx = 0;
+        for (FHIRPathNode node : result) {
+            Resource r = node.asResourceNode().resource();
+
+            if (r instanceof Patient) {
+                Patient patient = node.asResourceNode().resource().as(Patient.class);
+                
+                String patientName = patient.getName().stream()
+                                        .map(name -> name.getGiven()
+                                                            .stream()
+                                                            .map(m -> m.getValue())
+                                                            .collect(Collectors.joining(" "))
+                                                    + "," 
+                                                    + name.getFamily().getValue())
+                                        .collect(Collectors.joining(","));
+                builder.append("[").append(idx++).append("] ");
+                builder.append(patientName);
+                builder.append("\n");
+            }
+        }
+        LOG.info("--> " + builder.toString());
+        return builder.toString();
+    }
+    ```
+
 6. Review the `/src/main/java/com/ibm/fhir/example/BundleGenerator.java` and you'll see the `fhir-model` is used to build a set of resources in the HL7 FHIR Standard.
+
+    The sampleData method uses the IBM FHIR Server's `fhir-model` to create a [Bundle](https://www.hl7.org/fhir/Bundle.html) that reflects a conformant set of Resources for the patient.  This particular patient has a Medication prescribed for his observed (Observation) Blood Pressure and subsequently administered the medicine (MedicationAdministration).
+   
+    With the following method, you see how the HL7 FHIR model is wrapped in a set of builders to create an Observation of the Patient's Blood Pressure reading. A very cool thing here is the `.subject(Reference.builder().reference(string("Patient/" + patientId)).build())` which is a relative reference to the Patient. Relative references allow us to retrieve the Patient's resources in one call.
+
+    ``` java
+    public Observation buildObservation(String patientId) {
+        CodeableConcept code = CodeableConcept.builder()
+            .coding(
+                Coding.builder()
+                    .code(Code.of("85354-9"))
+                    .system(Uri.of("http://loinc.org"))
+                    .display(string("Blood pressure panel with all children optional"))
+                    .build())
+            .text(string("Blood pressure systolic & diastolic"))
+            .build();
+
+        Observation observation = Observation.builder()
+                .status(ObservationStatus.FINAL)
+                .category(
+                    CodeableConcept.builder()
+                        .coding(
+                            Coding.builder()
+                                .system(Uri.of("http://terminology.hl7.org/CodeSystem/observation-category"))
+                                .code(Code.of("vital-signs"))
+                                .display(string("Vital Signs"))
+                            .build())
+                            .text(string("Vital Signs"))
+                        .build())
+                .bodySite(
+                    CodeableConcept.builder()
+                        .coding(Coding.builder().code(Code.of("55284-4"))
+                        .system(Uri.of("http://loinc.org")).build())
+                        .text(string("Blood pressure systolic & diastolic")).build())
+                .code(code)
+                .subject(Reference.builder().reference(string("Patient/" + patientId)).build())
+                .component(Component.builder().code(CodeableConcept.builder().coding(Coding.builder().code(Code.of("8480-6"))
+                        .system(Uri.of("http://loinc.org")).build())
+                        .text(string("Systolic blood pressure")).build())
+                        .value(Quantity.builder().value(Decimal.of(124.9)).unit(string("mmHg")).build()).build())
+                .component(Component.builder().code(CodeableConcept.builder().coding(Coding.builder().code(Code.of("8462-4"))
+                        .system(Uri.of("http://loinc.org")).build())
+                        .text(string("Diastolic blood pressure")).build())
+                        .value(Quantity.builder().value(Decimal.of(93.7)).unit(string("mmHg")).build()).build())
+                .text(
+                    Narrative.builder()
+                        .div(Xhtml.of("<div xmlns=\"http://www.w3.org/1999/xhtml\">GENERATED</div>"))
+                        .status(NarrativeStatus.GENERATED).build())
+                .build();
+        return observation;
+    }
+    ```
 
 ### 5. Build the Serverless project
 
@@ -150,20 +326,20 @@ Once you have the project in the IDE, you are ready to
 
 1. If you have Maven installed: 
 
-```
-mvn clean install
-```
+    ```
+    mvn clean install
+    ```
 
-You should see `BUILD SUCCESS`. Note, if you do not, you 
+    You should see `BUILD SUCCESS`. Note, if you do not, you 
 
-```
-[INFO] -------------------------------------------------
-[INFO] BUILD SUCCESS
-[INFO] -------------------------------------------------
-[INFO] Total time:  9.077 s
-[INFO] Finished at: 2021-09-07T16:02:16-04:00
-[INFO] -------------------------------------------------
-```
+    ```
+    [INFO] -------------------------------------------------
+    [INFO] BUILD SUCCESS
+    [INFO] -------------------------------------------------
+    [INFO] Total time:  9.077 s
+    [INFO] Finished at: 2021-09-07T16:02:16-04:00
+    [INFO] -------------------------------------------------
+    ```
 
 1. If you do not have Maven installed
 
