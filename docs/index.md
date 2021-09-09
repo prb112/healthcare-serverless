@@ -26,6 +26,8 @@ Each attendee should complete the Prerequisites section.
 7. Create the OpenShift Serverless service
 
 #### **Test**
+
+{:start="8"}
 8. Test the Serverless Function to load data
 9. Confirm Your data is loaded using FHIR Search
 10. Test the Serverless Function to search and read data
