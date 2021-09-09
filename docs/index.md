@@ -42,7 +42,7 @@ The lab proctors have previously completed the `Appendix: Setup`. If you are run
 
 4. Install the [IBM Cloud CLI Plugins](https://cloud.ibm.com/docs/openshift?topic=openshift-openshift-cli)
 
-    ### *Plugin: Container Service*
+### *Plugin: Container Service*
 
     ``` shell
     ibmcloud plugin install container-service -f
@@ -59,7 +59,7 @@ The lab proctors have previously completed the `Appendix: Setup`. If you are run
     Plug-in 'container-service 1.0.312' was successfully installed into /Users/example/.bluemix/plugins/container-service. Use 'ibmcloud plugin show container-service' to show its details.
     ```
 
-    ### *Plugin: Container Registry*
+### *Plugin: Container Registry*
 
     ``` shell
     ibmcloud plugin install container-registry -f
@@ -76,7 +76,7 @@ The lab proctors have previously completed the `Appendix: Setup`. If you are run
     Plug-in 'container-registry 0.1.543' was successfully installed into /Users/example/.bluemix/plugins/container-registry. Use 'ibmcloud plugin show container-registry' to show its details.
     ```
 
-    ### *Plugin: Observe Service*
+### *Plugin: Observe Service*
 
     ``` shell
     ibmcloud plugin install observe-service -f
@@ -478,7 +478,7 @@ In this lab, you have built a simple healthcare serverless application using Red
 
 # **Contact**
 
-Paul Bastide is reachable at:
+[Paul Bastide](https://bastide.org/) is reachable at:
 
 - [Author: Paul Bastide](mailto://pbastide@us.ibm.com?subject=DDC%3A%20Integrating%20Healthcare%20Data%20in%20a%20Serverless%20World%20Lab)
 - [GitHub: Healthcare Serverless Lab - Issues](https://ibm.biz/healthcare-serverless-issues)
