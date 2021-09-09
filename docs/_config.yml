@@ -1,4 +1,9 @@
-theme: hacker
+remote_theme: pages-themes/architect@v0.2.0
+plugins:
+- jekyll-remote-theme
 markdown: kramdown
 kramdown:
   parse_block_html: true
+title: Integrating Healthcare Data in a Serverless World
+description: Welcome to the Digital Developer Conference Hybrid Cloud - Integrating Healthcare Data in a Serverless World!
+show_downloads: false
