@@ -477,7 +477,7 @@ Once you have the project in the IDE, you are ready to
 
     You see the revision of the Knative application is made available.
 
-        ```
+    ```
     Replacing service 'myfhir' in namespace 'my-fhir-project':
 
     0.213s Configuration "myfhir" does not have any ready Revision.
@@ -517,17 +517,18 @@ Once you have the project in the IDE, you are ready to
     You see the URLs generated for the new Patient data.
 
     ```
-    [https://fhirserver-dev-fhir-serverless.healthcare-serverless-250babbbe4c3000e15508cd07c1d282b-0000.us-east.containers.appdomain.cloud/fhir-server/api/v4/Patient/dc7857d3-b5b8-4267-bdc5-14f86848ea7c/_history/1, https://fhirserver-dev-fhir-serverless.healthcare-serverless-250babbbe4c3000e15508cd07c1d282b-0000.us-east.containers.appdomain.cloud/fhir-server/api/v4/Observation/17bc7e604ee-556a98d0-08bf-4026-a3cd-b237cca895ca/_history/1, https://fhirserver-dev-fhir-serverless.healthcare-serverless-250babbbe4c3000e15508cd07c1d282b-0000.us-east.containers.appdomain.cloud/fhir-server/api/v4/Medication/b537a83b-0b06-4b07-8332-9801ca7022b2/_history/1, https://fhirserver-dev-fhir-serverless.healthcare-serverless-250babbbe4c3000e15508cd07c1d282b-0000.us-east.containers.appdomain.cloud/fhir-server/api/v4/MedicationAdministration/17bc7e6052c-a074acff-86db-4ef6-9aac-2195eb7e9118/_history/1]
+    [https://fhirserver.appdomain.cloud/fhir-server/api/v4/Patient/dc7857d3-b5b8-4267-bdc5-14f86848ea7c/_history/1, https://fhirserver.appdomain.cloud/fhir-server/api/v4/Observation/17bc7e604ee-556a98d0-08bf-4026-a3cd-b237cca895ca/_history/1, https://fhirserver.appdomain.cloud/fhir-server/api/v4/Medication/b537a83b-0b06-4b07-8332-9801ca7022b2/_history/1, https://fhirserver.appdomain.cloud/fhir-server/api/v4/MedicationAdministration/17bc7e6052c-a074acff-86db-4ef6-9aac-2195eb7e9118/_history/1]
     ```
 
 ### 9. Confirm Your data is loaded using FHIR Search
 
-1. Copy the URL from the output. e.g. `https://fhirserver-dev-fhir-serverless.0000.us-east.containers.appdomain.cloud/fhir-server/api/v4/Patient/dc7857d3-b5b8-4267-bdc5-14f86848ea7c/_history/1` and modify it slightly to extract the UUID so you are able to execute an `_id` search.
+1. Copy the URL from the output. e.g. `https://fhirserver-dev-fhir-serverless.0000.us-east.containers.appdomain.cloud/fhir-server/api/v4/Patient/dc7857d3-b5b8-4267-bdc5-14f86848ea7c/_history/1` and modify it slightly to extract the UUID so you are able to execute an `_id` search. The UUID above is `dc7857d3-b5b8-4267-bdc5-14f86848ea7c`.
 
 1. Confirm the Patient is loaded using IBM FHIR Server's Search support. Be sure to include the URL in Double Quotes.
 
     ```
-    curl -k -u fhiruser:change-password "https://fhirserver-dev-hir-serverless.healthcare-serverless-250babbbe4c3000e15508cd07c1d282b-0000.us-east.containers.appdomain.cloud/fhir-server/api/v4/Patient?_id=dc7857d3-b5b8-4267-bdc5-14f86848ea7c&_pretty=true"
+    curl -k -u fhiruser:change-password \
+        "https://fhirserver-dev-hir-serverless.healthcare-serverless-.us-east.containers.appdomain.cloud/fhir-server/api/v4/Patient?_id=dc7857d3-b5b8-4267-bdc5-14f86848ea7c&_pretty=true"
     ```
 
     You see the FHIR R4 Patient Resource
@@ -541,12 +542,12 @@ Once you have the project in the IDE, you are ready to
         "link": [
             {
                 "relation": "self",
-                "url": "https://fhirserver-dev-fhir-serverless.healthcare-serverless-250babbbe4c3000e15508cd07c1d282b-0000.us-east.containers.appdomain.cloud/fhir-server/api/v4/Patient?_count=10&_id=dc7857d3-b5b8-4267-bdc5-14f86848ea7c&_page=1"
+                "url": "https://fhirserver.appdomain.cloud/fhir-server/api/v4/Patient?_count=10&_id=dc7857d3-b5b8-4267-bdc5-14f86848ea7c&_page=1"
             }
         ],
         "entry": [
             {
-                "fullUrl": "https://fhirserver-dev-fhir-serverless.healthcare-serverless-250babbbe4c3000e15508cd07c1d282b-0000.us-east.containers.appdomain.cloud/fhir-server/api/v4/Patient/dc7857d3-b5b8-4267-bdc5-14f86848ea7c",
+                "fullUrl": "https://fhirserver.appdomain.cloud/fhir-server/api/v4/Patient/dc7857d3-b5b8-4267-bdc5-14f86848ea7c",
                 "resource": {
                     "resourceType": "Patient",
                     "id": "dc7857d3-b5b8-4267-bdc5-14f86848ea7c",
@@ -616,9 +617,8 @@ In this lab, you have built a simple healthcare serverless application using Red
 - [GitHub: Healthcare Serverless Lab - Issues](https://ibm.biz/healthcare-serverless-issues)
 - [HL7 Zulip: #ibm](https://chat.fhir.org/#narrow/stream/212434-ibm)
 
-# **Appendix: Setup**
-
 <div id="setup"/>
+# **Appendix: Setup**
 
 #### **Setup** IBM Cloud CLI (Optional)
 
