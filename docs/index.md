@@ -586,8 +586,8 @@ You have successfully loaded your IBM FHIR Server with Healthcare Data using a S
 
     ``` sh
     Total Number of Medication Administrations Today are: 2
-    [0] Smith, John
-    [1] Smith, John
+    [0] John Smith
+    [1] Johnny Smith
     ```
 
 If there is more than one Patient created, you'll notice your report gets slightly more complicated as it reports on the total Patients that have Medications administered to them.
