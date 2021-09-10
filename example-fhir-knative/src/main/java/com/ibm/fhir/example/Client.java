@@ -134,7 +134,7 @@ public class Client {
                                                             .stream()
                                                             .map(m -> m.getValue())
                                                             .collect(Collectors.joining(" "))
-                                                    + "," 
+                                                    + " " 
                                                     + name.getFamily().getValue())
                                         .collect(Collectors.joining(","));
                 builder.append("[").append(idx++).append("] ");

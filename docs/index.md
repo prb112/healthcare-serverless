@@ -498,7 +498,7 @@ Once you have the project in the IDE, you are ready to review and build.
 1. Call the Serverless project with example first and last names.
 
     ```
-    curl $(kn service describe myfhir -o url)'/v1/api/loader?last=John&first=Smith'
+    curl $(kn service describe myfhir -o url)'/v1/api/loader?last=Smith&first=John'
     ```
 
     You see the URLs generated for the new Patient data.
