@@ -600,7 +600,7 @@ In this lab, you have built a simple healthcare serverless application using Red
 
 [Paul Bastide](https://bastide.org/) is reachable at:
 
-- [Author: Paul Bastide](mailto://pbastide@us.ibm.com?subject=DDC%3A%20Integrating%20Healthcare%20Data%20in%20a%20Serverless%20World%20Lab)
+- [Author: Paul Bastide](mailto:pbastide@us.ibm.com?subject=DDC%3A%20Integrating%20Healthcare%20Data%20in%20a%20Serverless%20World%20Lab)
 - [GitHub: Healthcare Serverless Lab - Issues](https://ibm.biz/healthcare-serverless-issues)
 - [HL7 Zulip: #ibm](https://chat.fhir.org/#narrow/stream/212434-ibm)
 
