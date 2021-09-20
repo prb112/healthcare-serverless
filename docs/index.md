@@ -390,10 +390,10 @@ Once you have the project in the IDE, you are ready to review and build.
 
 1. Check the OpenShift Image registry host
 
-    ```
+    <code>
     oc get route default-route -n openshift-image-registry \
          --template='{{ .spec.host }}'
-    ```
+    </code>
     
     You see the hostname printed. 
 
@@ -415,24 +415,24 @@ Once you have the project in the IDE, you are ready to review and build.
 
 1. Tag the Image for the Image Registry
 
-    ```
+    <code>
     docker tag example/fhir-knative-jvm:latest \
-        $(oc get route default-route -n openshift-image-registry --template='{{ .spec.host }}')/$(oc project --short=true)/fhir-knative-jvm:latest
-    ```
+        $(oc get route default-route -n openshift-image-registry --template='{{.spec.host }}')/$(oc project --short=true)/fhir-knative-jvm:latest
+    </code>
 
 1. Login to the Image Registry, and confirm you see `Login Succeeded`.
 
-    ```
+    <code>
     docker login -u `oc whoami` -p `oc whoami --show-token` \
-        $(oc get route default-route -n openshift-image-registry --template='{{ .spec.host }}')
-    ```
+        $(oc get route default-route -n openshift-image-registry --template='{{.spec.host }}')
+    </code>
 
 1. Push the Image into the OpenShift Image Registry
 
-    ```
+    <code>
     docker push \
-        $(oc get route default-route -n openshift-image-registry --template='{{ .spec.host }}')/$(oc project --short=true)/fhir-knative-jvm:latest
-    ```
+        $(oc get route default-route -n openshift-image-registry --template='{{.spec.host }}')/$(oc project --short=true)/fhir-knative-jvm:latest
+    </code>
 
     You see the image is on the server
 
