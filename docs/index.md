@@ -10,6 +10,15 @@ The content for this lab can be found at [https://ibm.biz/ibm-fhir-server-health
 
 Have fun!
 
+## To Get Started Right Away with the conference...
+1. Get added to the “DEGCLOUD” IBM Cloud account using the following app - https://account-invite.mybluemix.net/
+- lab key: welcome
+- IBM ID: the email you used to create your IBM Cloud account
+2. You will then get an invite message in your email which you must accept. It doesn’t matter if you see an “oops” message here. You must accept the invite before continuing.
+3. Then, you can use the following app to get access to a cluster. - https://ddc-healthcare-lab.mybluemix.net
+- Lab key: oslab
+- IBM ID: The email you used to create your IBM Cloud account
+
 ## **Introduction**
 
 For each lab participant, the lab has two distinct sections - Project and Test. 
