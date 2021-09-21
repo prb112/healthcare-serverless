@@ -1030,7 +1030,7 @@ The following references are handy for fellow developers:
 - [Docker: IBM FHIR Server Schema Tool](https://hub.docker.com/r/ibmcom/ibm-fhir-schematool)
 - [Project Alvearie](https://alvearie.io/)
 
-#### **Import Links**
+#### **Important Links**
 
 - [GitHub: Healthcare Serverless Lab](https://ibm.biz/ibm-fhir-server-healthcare-serverless)
 
