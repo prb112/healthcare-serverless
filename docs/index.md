@@ -10,6 +10,8 @@ The content for this lab can be found at [https://ibm.biz/ibm-fhir-server-health
 
 Have fun!
 
+At the conclusion of the Conference, please email pbastide@us.ibm.com with questions.
+
 ## To Get Started Right Away with the conference...
 1. Get added to the “DEGCLOUD” IBM Cloud account using the following app - https://account-invite.mybluemix.net/
 - lab key: welcome
